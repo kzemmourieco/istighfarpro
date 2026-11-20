@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الورد اليومي - 5250</title>
+    <title>الاستغفار - الورد اليومي</title>
     <style>
-        /* CSS: نفس التصميم تاعك */
         body {
             background-color: #0d2a23;
             color: #fff;
@@ -13,126 +12,188 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
         }
 
-        .header { width: 100%; text-align: right; margin-bottom: 20px; }
-        .header h1 { color: #e5b85c; font-size: 24px; margin: 0; }
-        .header p { color: #a0b0a8; font-size: 14px; margin: 5px 0; }
+        /* الهيدر */
+        .header { 
+            width: 100%; 
+            max-width: 350px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 10px; 
+        }
+        .header h1 { color: #fff; font-size: 22px; margin: 0; font-weight: bold; }
+        
+        .day-badge {
+            background-color: #14382f;
+            color: #e5b85c;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
-        /* الدائرة الكبيرة */
+        /* النص التحفيزي في الفوق */
+        .motivation-text {
+            font-size: 18px;
+            color: #e5b85c;
+            font-weight: bold;
+            text-align: center;
+            min-height: 50px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* الدائرة */
         .circle-container {
             position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 20px 0;
+            width: 260px;
+            height: 260px;
+            margin: 10px 0;
+            flex-shrink: 0;
         }
-        .circle-bg {
-            fill: none;
-            stroke: #1e443a;
-            stroke-width: 12;
-        }
+        .circle-bg { fill: none; stroke: #1e443a; stroke-width: 12; }
         .circle-progress {
-            fill: none;
-            stroke: #e5b85c;
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-dasharray: 691;
-            stroke-dashoffset: 691;
+            fill: none; stroke: #e5b85c; stroke-width: 12; stroke-linecap: round;
+            stroke-dasharray: 723; /* محيط الدائرة (2 * PI * 115) */
+            stroke-dashoffset: 723;
             transition: stroke-dashoffset 0.3s ease;
-            transform: rotate(-90deg);
+            transform: rotate(-90deg); 
             transform-origin: 50% 50%;
         }
         .circle-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            width: 100%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; width: 100%;
         }
-        .circle-number { font-size: 48px; font-weight: bold; margin: 0; }
-        .circle-percent { font-size: 18px; color: #e5b85c; margin: 0; }
+        .circle-number { font-size: 65px; font-weight: bold; margin: 0; line-height: 1; color: #fff; }
+        .circle-percent { font-size: 20px; color: #e5b85c; margin: 5px 0 0 0; }
 
-        /* الزر الأصفر الذكي اللي فيه الذكر */
+        /* الزر الأصفر */
         .current-dhikr {
-            background-color: #e5b85c;
+            background-color: #e5b85c; 
             color: #0d2a23;
-            padding: 20px 30px;
+            padding: 15px 20px; 
             border-radius: 15px;
-            font-size: 22px;
+            font-size: 20px; 
             font-weight: bold;
-            margin: 20px 0;
+            margin: 15px 0; 
             text-align: center;
-            width: 100%;
+            width: 100%; 
             max-width: 350px;
-            cursor: pointer;
+            height: 90px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
             user-select: none;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: all 0.2s ease;
-            line-height: 1.5;
+            transition: transform 0.1s ease;
         }
         .current-dhikr:active { transform: scale(0.95); }
 
-        /* الأزرار السفلية */
+        /* الأزرار */
         .controls {
-            display: flex;
-            gap: 15px;
-            width: 100%;
-            max-width: 350px;
+            display: flex; gap: 10px; width: 100%; max-width: 350px;
         }
         .btn {
-            flex: 1;
-            background-color: transparent;
-            border: 1px solid #4a6b60;
+            flex: 1; 
+            background-color: transparent; 
+            border: 1px solid #4a6b60; 
             color: #fff;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
+            padding: 12px; 
+            border-radius: 12px; 
+            font-size: 16px; 
             cursor: pointer;
             transition: background 0.2s;
         }
         .btn:hover { background-color: #1e443a; }
         .btn-primary { background-color: #1e443a; border: none; }
         
-        .footer-info {
-            margin-top: 20px;
-            background-color: #14382f;
-            padding: 15px;
+        .info-card {
+            margin-top: 15px; 
+            background-color: #14382f; 
+            padding: 15px; 
             border-radius: 12px;
-            width: 100%;
-            max-width: 350px;
-            text-align: right;
-            font-size: 14px;
-            color: #a0b0a8;
-            display: flex;
-            justify-content: space-between;
+            width: 100%; 
+            max-width: 350px; 
+            display: flex; 
+            justify-content: space-between; 
             box-sizing: border-box;
+            font-size: 14px; 
+            color: #a0b0a8;
         }
-        
-        .total-progress {
+        .info-card b { color: #e5b85c; }
+
+        .total-card {
             margin-top: 15px;
+            text-align: center;
             font-size: 14px;
             color: #e5b85c;
-            text-align: center;
         }
+        .total-card b { font-size: 16px; }
+
+        /* إحصائيات 7 أيام */
+        .stats-btn {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 350px;
+            background-color: #14382f;
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-card {
+            margin-top: 10px; 
+            background-color: #14382f; 
+            padding: 15px; 
+            border-radius: 12px;
+            width: 100%; 
+            max-width: 350px; 
+            box-sizing: border-box;
+            display: none;
+        }
+        .stats-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #fff; }
+        .day-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid #1e443a;
+            font-size: 14px;
+        }
+        .day-row:last-child { border-bottom: none; }
+        .day-row span { color: #a0b0a8; }
+        .day-row b { color: #e5b85c; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>الورد اليومي</h1>
-        <p id="phase-title">المرحلة 1 من 6</p>
+        <h1>الاستغفار</h1>
+        <div class="day-badge" id="day-number">يوم 0</div>
     </div>
 
+    <!-- النص التحفيزي -->
+    <div class="motivation-text" id="motivation-text">اضغط للبدء</div>
+
     <div class="circle-container">
-        <svg class="progress-ring" width="250" height="250">
-            <circle class="circle-bg" cx="125" cy="125" r="110"></circle>
-            <circle class="circle-progress" id="progress-ring" cx="125" cy="125" r="110"></circle>
+        <svg class="progress-ring" width="260" height="260">
+            <circle class="circle-bg" cx="130" cy="130" r="115"></circle>
+            <circle class="circle-progress" id="progress-ring" cx="130" cy="130" r="115"></circle>
         </svg>
         <div class="circle-text">
             <p class="circle-number" id="count-text">0</p>
@@ -140,7 +201,7 @@
         </div>
     </div>
 
-    <!-- الزر الأصفر الذكي -->
+    <!-- الزر الأصفر -->
     <div class="current-dhikr" id="dhikr-btn" onclick="increment()">
         <span id="dhikr-name">اضغط للبدء</span>
     </div>
@@ -150,73 +211,167 @@
         <button class="btn btn-primary" onclick="add100()">أضف 100</button>
     </div>
 
-    <div class="footer-info">
-        <span>باقي في الذكر: <b id="remaining-text">0</b></span>
-        <span>هدف الذكر: <b id="target-text">0</b></span>
+    <div class="info-card">
+        <span>باقي: <b id="remaining-text">0</b></span>
+        <span>الهدف: <b id="target-text">0</b></span>
     </div>
 
-    <div class="total-progress">
+    <div class="total-card">
         إجمالي ما تم إنجازه اليوم: <b id="total-done">0</b> / 5250
     </div>
 
+    <!-- زر الإحصائيات -->
+    <button class="stats-btn" onclick="toggleStats()">
+        <span>إحصائيات آخر 7 أيام</span>
+        <span id="stats-arrow">▼</span>
+    </button>
+
+    <div class="stats-card" id="stats-card">
+        <div id="stats-list"></div>
+    </div>
+
     <script>
-        // 1. الأذكار بالترتيب الصحيح (المجموع 5250)
+        // 1. تعريف المراحل مع التحفيزات
         const phases = [
-            { name: "الحمد لله", target: 300 },
-            { name: "سبحان الله", target: 300 }, // ✅ تصحيح: ولات سبحان الله
-            { name: "الله أكبر", target: 300 },
-            { name: "صلى الله عليه وسلم", target: 300 },
-            { name: "رضيت بالله ربا وبالإسلام دينا وبمحمد نبيا", target: 50 },
-            { name: "أستغفر الله", target: 4000 }
+            { 
+                name: "الحمد لله", target: 300,
+                motivations: [
+                    { min: 0, max: 100, text: "إستمر لا تدع الشيطان يقوفك" },
+                    { min: 100, max: 200, text: "استمر يا بطل" },
+                    { min: 200, max: 300, text: "إن الجنة في انتظارك" }
+                ]
+            },
+            { 
+                name: "سبحان الله", target: 300,
+                motivations: [
+                    { min: 0, max: 100, text: "إستمر لا تدع الشيطان يقوفك" },
+                    { min: 100, max: 200, text: "استمر يا بطل" },
+                    { min: 200, max: 300, text: "إن الجنة في انتظارك" }
+                ]
+            },
+            { 
+                name: "الله أكبر", target: 300,
+                motivations: [
+                    { min: 0, max: 100, text: "إستمر لا تدع الشيطان يقوفك" },
+                    { min: 100, max: 200, text: "استمر يا بطل" },
+                    { min: 200, max: 300, text: "إن الجنة في انتظارك" }
+                ]
+            },
+            { 
+                name: "صلى الله عليه وسلم", target: 300,
+                motivations: [
+                    { min: 0, max: 100, text: "إستمر لا تدع الشيطان يقوفك" },
+                    { min: 100, max: 200, text: "استمر يا بطل" },
+                    { min: 200, max: 300, text: "إن الجنة في انتظارك" }
+                ]
+            },
+            { 
+                name: "رضيت بالله ربا وبالإسلام دينا وبمحمد نبيا", target: 60,
+                motivations: [
+                    { min: 0, max: 20, text: "إستمر لا تدع الشيطان يقوفك" },
+                    { min: 20, max: 40, text: "استمر يا بطل" },
+                    { min: 40, max: 60, text: "إن الجنة في انتظارك" }
+                ]
+            },
+            { 
+                name: "أستغفر الله", target: 4000,
+                motivations: [
+                    { min: 0, max: 4000, text: "إستمر... إن الجنة في انتظارك" }
+                ]
+            }
         ];
 
+        // متغيرات الحالة
         let currentPhaseIndex = 0; 
         let currentCount = 0; 
         let totalDone = 0; 
 
         // عناصر HTML
+        const motivationEl = document.getElementById('motivation-text');
         const dhikrNameEl = document.getElementById('dhikr-name');
         const countTextEl = document.getElementById('count-text');
         const percentTextEl = document.getElementById('percent-text');
         const remainingEl = document.getElementById('remaining-text');
         const targetEl = document.getElementById('target-text');
         const progressRingEl = document.getElementById('progress-ring');
-        const phaseTitleEl = document.getElementById('phase-title');
+        const dayNumberEl = document.getElementById('day-number');
         const totalDoneEl = document.getElementById('total-done');
+        const statsCardEl = document.getElementById('stats-card');
+        const statsListEl = document.getElementById('stats-list');
+        const statsArrowEl = document.getElementById('stats-arrow');
 
-        const circumference = 2 * Math.PI * 110; 
+        const circumference = 2 * Math.PI * 115; 
 
-        // دالة تحديث الواجهة
+        // --- الحفظ (LocalStorage) ---
+        function saveProgress() {
+            const data = {
+                phaseIndex: currentPhaseIndex,
+                count: currentCount,
+                total: totalDone,
+                lastUpdate: new Date().toDateString()
+            };
+            localStorage.setItem('istighfar_data_v2', JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('istighfar_data_v2');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.lastUpdate !== new Date().toDateString()) {
+                    currentPhaseIndex = 0;
+                    currentCount = 0;
+                    totalDone = 0;
+                    saveProgress();
+                } else {
+                    currentPhaseIndex = data.phaseIndex;
+                    currentCount = data.count;
+                    totalDone = data.total;
+                }
+            }
+        }
+
+        // --- دالة تحديث الواجهة ---
         function updateUI() {
             if (currentPhaseIndex >= phases.length) {
-                dhikrNameEl.innerText = "ماشاء الله! أكملت الورد كامل 🎉";
+                motivationEl.innerText = "ماشاء الله! أكملت الورد كامل 🎉";
+                dhikrNameEl.innerText = "تم الورد";
                 countTextEl.innerText = "🎉";
                 percentTextEl.innerText = "100%";
                 progressRingEl.style.strokeDashoffset = 0;
-                phaseTitleEl.innerText = "تم الورد اليومي";
-                totalDoneEl.innerText = "5250";
+                targetEl.innerText = "0";
+                remainingEl.innerText = "0";
+                dayNumberEl.innerText = "مكتمل";
+                saveProgress();
                 return;
             }
 
             const phase = phases[currentPhaseIndex];
             
-            dhikrNameEl.innerText = `${phase.name} (${currentCount} / ${phase.target})`;
-            countTextEl.innerText = currentCount;
+            // 1. تحديث التحفيز
+            let currentMotivation = phase.motivations.find(m => currentCount >= m.min && currentCount < m.max);
+            if (!currentMotivation) currentMotivation = phase.motivations[phase.motivations.length - 1];
+            motivationEl.innerText = currentMotivation.text;
             
+            // 2. تحديث الزر الأصفر
+            dhikrNameEl.innerText = `${phase.name} (${currentCount} / ${phase.target})`;
+            
+            // 3. تحديث الدائرة
+            countTextEl.innerText = currentCount;
             const percent = (currentCount / phase.target) * 100;
             percentTextEl.innerText = `${Math.round(percent)}%`;
-            
             const offset = circumference - (percent / 100) * circumference;
             progressRingEl.style.strokeDashoffset = offset;
 
+            // 4. تحديث المعلومات
             targetEl.innerText = phase.target;
             remainingEl.innerText = phase.target - currentCount;
             totalDoneEl.innerText = totalDone;
 
-            phaseTitleEl.innerText = `المرحلة ${currentPhaseIndex + 1} من ${phases.length}`;
+            dayNumberEl.innerText = `المرحلة ${currentPhaseIndex + 1} من ${phases.length}`;
+
+            saveProgress();
         }
 
-        // دالة الزيادة (كي تكليكي على الزر الأصفر)
         function increment() {
             if (currentPhaseIndex >= phases.length) return; 
 
@@ -224,16 +379,16 @@
             currentCount++;
             totalDone++;
 
-            // إذا كملنا الذكر الحالي -> ننتقلوا للذكر اللي بعده أوتوماتيكياً
+            // تخزين تاريخ اليوم (للإحصائيات)
+            saveToHistory(totalDone);
+
             if (currentCount >= phase.target) {
                 currentPhaseIndex++;
                 currentCount = 0;
             }
-
             updateUI();
         }
 
-        // دالة التراجع
         function undo() {
             if (currentPhaseIndex >= phases.length) {
                 currentPhaseIndex = phases.length - 1;
@@ -250,15 +405,14 @@
             updateUI();
         }
 
-        // دالة إضافة 100
         function add100() {
             if (currentPhaseIndex >= phases.length) return;
-            
             const phase = phases[currentPhaseIndex];
             let needed = Math.min(100, phase.target - currentCount);
             
             currentCount += needed;
             totalDone += needed;
+            saveToHistory(totalDone);
 
             if (currentCount >= phase.target) {
                 currentPhaseIndex++;
@@ -267,8 +421,52 @@
             updateUI();
         }
 
-        // التهيئة الأولى
+        // --- إحصائيات 7 أيام ---
+        function saveToHistory(total) {
+            const history = JSON.parse(localStorage.getItem('istighfar_history') || '[]');
+            const todayStr = new Date().toDateString();
+            const existing = history.findIndex(h => h.date === todayStr);
+            
+            if (existing !== -1) {
+                history[existing].total = total;
+            } else {
+                history.push({ date: todayStr, total: total });
+            }
+            localStorage.setItem('istighfar_history', JSON.stringify(history));
+        }
+
+        function toggleStats() {
+            if (statsCardEl.style.display === 'block') {
+                statsCardEl.style.display = 'none';
+                statsArrowEl.innerText = "▼";
+                return;
+            }
+            
+            statsCardEl.style.display = 'block';
+            statsArrowEl.innerText = "▲";
+            statsListEl.innerHTML = '';
+            
+            const history = JSON.parse(localStorage.getItem('istighfar_history') || '[]');
+            const today = new Date();
+            
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() - i);
+                const dateStr = d.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'short' });
+                
+                const dayData = history.find(h => h.date === d.toDateString());
+                const count = dayData ? dayData.total : 0;
+                
+                const row = document.createElement('div');
+                row.className = 'day-row';
+                row.innerHTML = `<span>${dateStr}</span> <b>${count} تسبيحة</b>`;
+                statsListEl.appendChild(row);
+            }
+        }
+
+        // التشغيل
+        loadProgress();
         updateUI();
     </script>
 </body>
-  </html>
+</html>
